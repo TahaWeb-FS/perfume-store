@@ -1,11 +1,11 @@
 import { useState } from "react";
+import themuse from '../images/themuse1.png'
 
 const bg = { background: '#0c0a08' };
 const serif = 'Georgia, serif';
 const gold = '#d4af64';
 const goldFaint = 'rgba(212,175,100,0.08)';
 const goldBorder = 'rgba(212,175,100,0.12)';
-const goldBorderHover = 'rgba(212,175,100,0.3)';
 const textMuted = '#6a5a4a';
 const textDim = '#4a3f35';
 const textLight = '#e8d5a3';
@@ -13,28 +13,24 @@ const textLight = '#e8d5a3';
 // ── ORDER SUMMARY ─────────────────────────────────────────────────────────────
 const OrderSummary = ({ perfume }) => (
   <div className="h-fit sticky top-8" style={{ background: goldFaint, border: `1px solid ${goldBorder}`, padding: '2rem' }}>
+
+    {/* ── REAL PERFUME IMAGE ── */}
     <div className="relative flex justify-center mb-8">
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="w-32 h-32 rounded-full" style={{ background: 'radial-gradient(circle, rgba(212,175,100,0.08), transparent)' }} />
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+        <div className="w-48 h-48 rounded-full" style={{ background: 'radial-gradient(circle, rgba(212,175,100,0.08), transparent)' }} />
       </div>
-      <svg viewBox="0 0 120 200" className="w-24 relative z-10" style={{ filter: 'drop-shadow(0 0 20px rgba(212,175,100,0.25))' }} fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="45" y="8" width="30" height="14" rx="4" fill="url(#capGrad2)" />
-        <rect x="48" y="22" width="24" height="10" rx="2" fill="#92400e" />
-        <path d="M28 48 Q28 36 60 36 Q92 36 92 48 L96 160 Q96 178 60 178 Q24 178 24 160 Z" fill="url(#bottleGrad2)" />
-        <path d="M28 48 Q28 36 60 36 Q92 36 92 48 L96 160 Q96 178 60 178 Q24 178 24 160 Z" fill="url(#liquidGrad2)" opacity="0.7"/>
-        <ellipse cx="60" cy="48" rx="32" ry="8" fill="url(#topGrad2)" />
-        <rect x="34" y="88" width="52" height="60" rx="2" fill="rgba(12,10,8,0.6)" stroke="rgba(212,175,100,0.3)" strokeWidth="0.8"/>
-        <text x="60" y="110" textAnchor="middle" fill="#d4af64" fontSize="6" fontFamily="Georgia, serif" letterSpacing="3">MAISON</text>
-        <line x1="40" y1="115" x2="80" y2="115" stroke="rgba(212,175,100,0.3)" strokeWidth="0.5"/>
-        <text x="60" y="128" textAnchor="middle" fill="#f5f0e8" fontSize="8" fontFamily="Georgia, serif" letterSpacing="1">{perfume.archetype?.name?.split(' ')[1] || 'NOIR'}</text>
-        <text x="60" y="141" textAnchor="middle" fill="#b8955a" fontSize="5" fontFamily="Georgia, serif" letterSpacing="3">EAU DE PARFUM</text>
-        <defs>
-          <linearGradient id="capGrad2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="#78350f"/><stop offset="100%" stopColor="#451a03"/></linearGradient>
-          <linearGradient id="bottleGrad2" x1="0" y1="0" x2="1" y2="0"><stop offset="0%" stopColor="rgba(120,80,20,0.3)"/><stop offset="40%" stopColor="rgba(212,175,100,0.15)"/><stop offset="100%" stopColor="rgba(120,80,20,0.3)"/></linearGradient>
-          <linearGradient id="liquidGrad2" x1="0.3" y1="0" x2="0.7" y2="1"><stop offset="0%" stopColor="rgba(212,175,100,0.2)"/><stop offset="100%" stopColor="rgba(180,83,9,0.08)"/></linearGradient>
-          <linearGradient id="topGrad2" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor="rgba(212,175,100,0.25)"/><stop offset="100%" stopColor="rgba(120,53,15,0.15)"/></linearGradient>
-        </defs>
-      </svg>
+      <img
+        src={themuse}
+        alt="The Muse — Maison Noir"
+        className="relative z-10"
+        style={{
+          width: '140px',
+          height: '210px',
+          objectFit: 'cover',
+          objectPosition: 'center top',
+          filter: 'drop-shadow(0 8px 40px rgba(212,175,100,0.22))',
+        }}
+      />
     </div>
 
     <div className="text-center mb-6">
@@ -232,7 +228,7 @@ const PerfumeCheckout = ({ perfumeResults, onBack }) => {
     boxShadow: '0 6px 24px rgba(212,175,100,0.18)',
   };
 
-  // ── ORDER SUCCESS ──
+  // ── ORDER SUCCESS ──────────────────────────────────────────────────────────
   if (orderPlaced) {
     return (
       <div className="min-h-screen flex items-center justify-center px-6 py-20" style={bg}>
@@ -302,7 +298,7 @@ const PerfumeCheckout = ({ perfumeResults, onBack }) => {
         {/* Header */}
         <div className="flex items-center justify-between mb-10">
           <button onClick={onBack} className="flex items-center gap-2 text-xs uppercase tracking-[3px] transition-colors duration-300"
-            style={{ color: '#3a3028', fontFamily: serif }}
+            style={{ color: '#3a3028', fontFamily: serif, background: 'none', border: 'none', cursor: 'pointer' }}
             onMouseEnter={e => e.currentTarget.style.color = gold}
             onMouseLeave={e => e.currentTarget.style.color = '#3a3028'}>
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" /></svg>
@@ -374,13 +370,8 @@ const PerfumeCheckout = ({ perfumeResults, onBack }) => {
                   <h2 className="text-2xl font-light mb-1" style={{ color: textLight, fontFamily: serif }}>Payment</h2>
                   <p className="text-xs uppercase tracking-[3px]" style={{ color: textDim, fontFamily: serif }}>All transactions are encrypted and secure</p>
                 </div>
-                {/* Tabs */}
                 <div className="flex gap-1 mb-8 p-1" style={{ background: 'rgba(212,175,100,0.02)', border: '1px solid rgba(212,175,100,0.1)' }}>
-                  {[
-                    { id: 'card', label: 'Card' },
-                    { id: 'paypal', label: 'PayPal' },
-                    { id: 'apple', label: 'Apple Pay' },
-                  ].map(m => (
+                  {[{ id: 'card', label: 'Card' }, { id: 'paypal', label: 'PayPal' }, { id: 'apple', label: 'Apple Pay' }].map(m => (
                     <button key={m.id} onClick={() => setPayMethod(m.id)}
                       className="flex-1 py-3 text-xs uppercase tracking-[3px] transition-all duration-200"
                       style={{ background: payMethod === m.id ? 'rgba(212,175,100,0.08)' : 'transparent', border: payMethod === m.id ? '1px solid rgba(212,175,100,0.25)' : '1px solid transparent', color: payMethod === m.id ? gold : '#4a3f35', fontFamily: serif }}>
@@ -433,11 +424,10 @@ const PerfumeCheckout = ({ perfumeResults, onBack }) => {
                   <p className="text-xs uppercase tracking-[3px]" style={{ color: textDim, fontFamily: serif }}>Verify your order before we begin crafting</p>
                 </div>
                 <div className="space-y-4">
-                  {/* Delivery summary */}
                   <div className="p-5" style={{ background: 'rgba(212,175,100,0.02)', border: '1px solid rgba(212,175,100,0.1)' }}>
                     <div className="flex justify-between items-center mb-3">
                       <h4 className="text-xs uppercase tracking-[3px]" style={{ color: '#4a3f35', fontFamily: serif }}>Delivery To</h4>
-                      <button onClick={() => setStep(0)} className="text-xs uppercase tracking-wider transition-colors" style={{ color: textDim, fontFamily: serif }}
+                      <button onClick={() => setStep(0)} className="text-xs uppercase tracking-wider transition-colors" style={{ color: textDim, fontFamily: serif, background: 'none', border: 'none', cursor: 'pointer' }}
                         onMouseEnter={e => e.currentTarget.style.color = gold}
                         onMouseLeave={e => e.currentTarget.style.color = textDim}>Edit</button>
                     </div>
@@ -445,11 +435,10 @@ const PerfumeCheckout = ({ perfumeResults, onBack }) => {
                     <p className="text-xs" style={{ color: textDim, fontFamily: serif }}>{delivery.address}, {delivery.city} {delivery.zip}</p>
                     <p className="text-xs" style={{ color: textDim, fontFamily: serif }}>{delivery.email}</p>
                   </div>
-                  {/* Payment summary */}
                   <div className="p-5" style={{ background: 'rgba(212,175,100,0.02)', border: '1px solid rgba(212,175,100,0.1)' }}>
                     <div className="flex justify-between items-center mb-3">
                       <h4 className="text-xs uppercase tracking-[3px]" style={{ color: '#4a3f35', fontFamily: serif }}>Payment</h4>
-                      <button onClick={() => setStep(1)} className="text-xs uppercase tracking-wider transition-colors" style={{ color: textDim, fontFamily: serif }}
+                      <button onClick={() => setStep(1)} className="text-xs uppercase tracking-wider transition-colors" style={{ color: textDim, fontFamily: serif, background: 'none', border: 'none', cursor: 'pointer' }}
                         onMouseEnter={e => e.currentTarget.style.color = gold}
                         onMouseLeave={e => e.currentTarget.style.color = textDim}>Edit</button>
                     </div>
@@ -457,7 +446,6 @@ const PerfumeCheckout = ({ perfumeResults, onBack }) => {
                       {payMethod === 'card' ? `•••• •••• •••• ${payment.cardNum.replace(/\s/g,'').slice(-4) || '????'}` : payMethod}
                     </p>
                   </div>
-                  {/* Items */}
                   <div className="p-5" style={{ background: 'rgba(212,175,100,0.02)', border: '1px solid rgba(212,175,100,0.1)' }}>
                     <h4 className="text-xs uppercase tracking-[3px] mb-4" style={{ color: '#4a3f35', fontFamily: serif }}>Your Order</h4>
                     {[
@@ -487,7 +475,7 @@ const PerfumeCheckout = ({ perfumeResults, onBack }) => {
               {step > 0 && (
                 <button onClick={() => setStep(step - 1)}
                   className="flex items-center gap-2 px-6 py-4 text-xs uppercase tracking-[3px] transition-all duration-300"
-                  style={{ border: '1px solid rgba(212,175,100,0.15)', color: textMuted, fontFamily: serif }}
+                  style={{ border: '1px solid rgba(212,175,100,0.15)', color: textMuted, fontFamily: serif, background: 'none', cursor: 'pointer' }}
                   onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(212,175,100,0.3)'; e.currentTarget.style.color = gold; }}
                   onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(212,175,100,0.15)'; e.currentTarget.style.color = textMuted; }}>
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" /></svg>
@@ -497,14 +485,14 @@ const PerfumeCheckout = ({ perfumeResults, onBack }) => {
               {step < 2 ? (
                 <button onClick={handleNext}
                   className="flex-1 flex items-center justify-center gap-3 py-4 text-xs uppercase tracking-[3px] transition-all duration-300"
-                  style={btnPrimary}>
+                  style={{ ...btnPrimary, border: 'none', cursor: 'pointer' }}>
                   {step === 0 ? 'Continue to Payment' : 'Review Order'}
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
                 </button>
               ) : (
                 <button onClick={handlePlaceOrder} disabled={loading}
                   className="flex-1 flex items-center justify-center gap-3 py-4 text-xs uppercase tracking-[3px] transition-all duration-300"
-                  style={{ ...btnPrimary, opacity: loading ? 0.6 : 1, cursor: loading ? 'wait' : 'pointer' }}>
+                  style={{ ...btnPrimary, border: 'none', opacity: loading ? 0.6 : 1, cursor: loading ? 'wait' : 'pointer' }}>
                   {loading ? (
                     <>
                       <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"/></svg>

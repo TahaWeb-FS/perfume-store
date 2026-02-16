@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import themuse from '../images/themuse1.png'
 
 const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -14,7 +15,7 @@ const Hero = () => {
     {
       title: 'Moments',
       subtitle: 'That Matter',
-      description: 'Discover perfect scents for every occasion',
+      description: 'Discover perfect scents ',
       cta: 'Explore Collections',
     },
   ];
@@ -32,19 +33,14 @@ const Hero = () => {
 
       {/* ── RICH LAYERED BACKGROUND ── */}
       <div className="absolute inset-0">
-        {/* Base warm dark */}
         <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse 80% 60% at 50% 0%, #2a1810 0%, #0c0a08 60%)' }} />
-        {/* Champagne bloom top-right */}
         <div className="absolute top-0 right-0 w-2/3 h-2/3" style={{ background: 'radial-gradient(ellipse at 80% 10%, rgba(212,175,100,0.12) 0%, transparent 60%)' }} />
-        {/* Rose-gold bloom bottom-left */}
         <div className="absolute bottom-0 left-0 w-1/2 h-1/2" style={{ background: 'radial-gradient(ellipse at 20% 90%, rgba(180,120,80,0.08) 0%, transparent 60%)' }} />
-        {/* Subtle center vignette glow */}
         <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse 50% 40% at 50% 50%, rgba(212,175,100,0.04) 0%, transparent 70%)' }} />
       </div>
 
       {/* ── DECORATIVE GEOMETRIC LINES ── */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {/* Diagonal accent lines */}
         <svg className="absolute inset-0 w-full h-full opacity-[0.04]" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
           <line x1="0" y1="200" x2="600" y2="900" stroke="#d4af64" strokeWidth="1"/>
           <line x1="1440" y1="100" x2="900" y2="900" stroke="#d4af64" strokeWidth="1"/>
@@ -77,19 +73,27 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* ── FLOATING PERFUME BOTTLE (RIGHT SIDE, LARGE) ── */}
-      <div className="absolute right-0 top-0 bottom-0 w-1/2 flex items-center justify-center pointer-events-none opacity-[0.07]">
-        <svg viewBox="0 0 300 500" className="w-64 xl:w-80" fill="none">
-          <rect x="112" y="20" width="76" height="36" rx="10" fill="#d4af64"/>
-          <rect x="120" y="56" width="60" height="24" rx="4" fill="#b8955a"/>
-          <path d="M60 130 Q55 95 150 90 Q245 95 240 130 L255 400 Q258 450 150 452 Q42 450 45 400 Z" fill="#d4af64"/>
-          <ellipse cx="150" cy="130" rx="90" ry="22" fill="#e8c97a"/>
-          <rect x="82" y="220" width="136" height="150" rx="12" fill="rgba(12,10,8,0.4)"/>
-          <text x="150" y="265" textAnchor="middle" fill="#d4af64" fontSize="14" fontFamily="serif" letterSpacing="4">MAISON</text>
-          <line x1="95" y1="278" x2="205" y2="278" stroke="#d4af64" strokeWidth="0.8" opacity="0.5"/>
-          <text x="150" y="305" textAnchor="middle" fill="#f5f0e8" fontSize="20" fontFamily="serif" letterSpacing="2">NOIR</text>
-          <text x="150" y="340" textAnchor="middle" fill="#b8955a" fontSize="10" fontFamily="serif" letterSpacing="6">EAU DE PARFUM</text>
-        </svg>
+      {/* ── REAL PERFUME IMAGE (RIGHT SIDE) ── */}
+      <div className="absolute right-0 top-0 bottom-0 w-1/2 flex items-center justify-center pointer-events-none">
+        {/* Warm glow behind the bottle */}
+        <div className="absolute inset-0" style={{ background: 'radial-gradient(ellipse 60% 70% at 60% 50%, rgba(212,175,100,0.06) 0%, transparent 70%)' }} />
+        {/* Fade left edge so image bleeds into text area gracefully */}
+        <div className="absolute inset-y-0 left-0 w-32" style={{ background: 'linear-gradient(to right, #0c0a08, transparent)' }} />
+        {/* Fade bottom */}
+        <div className="absolute bottom-0 left-0 right-0 h-48" style={{ background: 'linear-gradient(to top, #0c0a08, transparent)' }} />
+        <img
+          src={themuse}
+          alt="Maison Noir — The Muse"
+          style={{
+            height: '85vh',
+            maxHeight: '780px',
+            width: 'auto',
+            objectFit: 'contain',
+            objectPosition: 'center',
+            filter: 'drop-shadow(0 20px 60px rgba(212,175,100,0.15))',
+            opacity: 0.92,
+          }}
+        />
       </div>
 
       {/* ── MAIN CONTENT ── */}
@@ -133,7 +137,6 @@ const Hero = () => {
               </span>
             </h1>
 
-            {/* Decorative line under heading */}
             <div className="flex items-center gap-4 mt-6 mb-8">
               <div className="h-px flex-1 max-w-xs" style={{ background: 'linear-gradient(to right, #d4af64, transparent)' }} />
               <div className="w-1.5 h-1.5 rounded-full" style={{ background: '#d4af64' }} />

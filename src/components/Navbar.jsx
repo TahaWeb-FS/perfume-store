@@ -1,49 +1,75 @@
 import { useState, useEffect } from 'react';
+import { getSession, logout } from './AuthPage';
 
-const Navbar = () => {
+const Navbar = ({ onNavigate, currentPage }) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [session, setSession] = useState(getSession());
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Re-check session whenever the page changes (e.g. after login)
+  useEffect(() => {
+    setSession(getSession());
+  }, [currentPage]);
+
   const navLinks = [
-    { name: 'Collections', href: '#collections' },
-    { name: 'Occasions', href: '#occasions' },
-    { name: 'Compose', href: '#compose' },
-    { name: 'About', href: '#about' },
+    { name: 'About', page: 'about' },
+    { name: 'Legal', page: 'legal' },
   ];
+
+  const handleNav = (page) => {
+    onNavigate(page);
+    setIsMobileMenuOpen(false);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleFaqScroll = () => {
+    setIsMobileMenuOpen(false);
+    if (currentPage !== 'home') {
+      onNavigate('home');
+      setTimeout(() => {
+        document.getElementById('faq-section')?.scrollIntoView({ behavior: 'smooth' });
+      }, 80);
+    } else {
+      document.getElementById('faq-section')?.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleLogout = () => {
+    logout();
+    setSession(null);
+    handleNav('home');
+  };
 
   return (
     <nav
       className="fixed top-0 left-0 right-0 z-50 transition-all duration-700"
       style={{
-        background: isScrolled
-          ? 'rgba(12, 10, 8, 0.96)'
-          : 'transparent',
+        background: isScrolled ? 'rgba(12, 10, 8, 0.96)' : 'transparent',
         backdropFilter: isScrolled ? 'blur(20px)' : 'none',
         borderBottom: isScrolled ? '1px solid rgba(212,175,100,0.1)' : '1px solid transparent',
       }}
     >
       <div className="max-w-7xl mx-auto px-8 lg:px-16">
-        <div className="flex items-center justify-between" style={{ height: isScrolled ? '72px' : '88px', transition: 'height 0.5s ease' }}>
+        <div
+          className="flex items-center justify-between"
+          style={{ height: isScrolled ? '72px' : '88px', transition: 'height 0.5s ease' }}
+        >
 
           {/* ── LOGO ── */}
-          <a href="/" className="group flex items-center gap-3">
-            {/* Monogram circle */}
+          <button
+            onClick={() => handleNav('home')}
+            className="group flex items-center gap-3"
+            style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+          >
             <div
               className="relative flex items-center justify-center transition-all duration-300"
-              style={{
-                width: '40px',
-                height: '40px',
-                border: '1px solid rgba(212,175,100,0.4)',
-                borderRadius: '50%',
-              }}
+              style={{ width: '40px', height: '40px', border: '1px solid rgba(212,175,100,0.4)', borderRadius: '50%' }}
             >
               <span
                 style={{
@@ -55,99 +81,150 @@ const Navbar = () => {
                   letterSpacing: '1px',
                 }}
               >
-                MN
+                NO
               </span>
-              {/* Rotating ring on hover */}
               <div
                 className="absolute inset-0 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 style={{ border: '1px solid rgba(212,175,100,0.6)' }}
               />
             </div>
-            <div>
-              <span
-                className="text-xl lg:text-2xl font-light tracking-[6px] uppercase transition-all duration-300"
-                style={{
-                  fontFamily: 'Georgia, serif',
-                  background: 'linear-gradient(135deg, #f5f0e8, #d4af64)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                }}
-              >
-                ESSENCE
-              </span>
-            </div>
-          </a>
+            <span
+              className="text-xl lg:text-2xl font-light tracking-[6px] uppercase"
+              style={{
+                fontFamily: 'Georgia, serif',
+                background: 'linear-gradient(135deg, #f5f0e8, #d4af64)',
+                WebkitBackgroundClip: 'text',
+                WebkitTextFillColor: 'transparent',
+              }}
+            >
+              NOÉME
+            </span>
+          </button>
 
           {/* ── DESKTOP NAV ── */}
           <div className="hidden lg:flex items-center gap-10">
             {navLinks.map((link) => (
-              <a
+              <button
                 key={link.name}
-                href={link.href}
+                onClick={() => handleNav(link.page)}
                 className="relative text-xs uppercase tracking-[3px] transition-all duration-300 group"
-                style={{ color: '#7a6a5a', fontFamily: 'Georgia, serif' }}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: currentPage === link.page ? '#d4af64' : '#7a6a5a',
+                  fontFamily: 'Georgia, serif',
+                  padding: 0,
+                }}
                 onMouseEnter={e => e.currentTarget.style.color = '#d4af64'}
-                onMouseLeave={e => e.currentTarget.style.color = '#7a6a5a'}
+                onMouseLeave={e => e.currentTarget.style.color = currentPage === link.page ? '#d4af64' : '#7a6a5a'}
               >
                 {link.name}
                 <span
-                  className="absolute -bottom-1 left-0 w-0 h-px group-hover:w-full transition-all duration-400"
-                  style={{ background: 'linear-gradient(to right, #d4af64, #b8955a)', transitionDuration: '400ms' }}
+                  className="absolute -bottom-1 left-0 h-px transition-all duration-400 group-hover:w-full"
+                  style={{
+                    background: 'linear-gradient(to right, #d4af64, #b8955a)',
+                    width: currentPage === link.page ? '100%' : '0%',
+                    transitionDuration: '400ms',
+                  }}
                 />
-              </a>
+              </button>
             ))}
+
+            {/* ── FAQ scroll link ── */}
+            <button
+              onClick={handleFaqScroll}
+              className="relative text-xs uppercase tracking-[3px] transition-all duration-300 group"
+              style={{
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+                color: '#7a6a5a',
+                fontFamily: 'Georgia, serif',
+                padding: 0,
+              }}
+              onMouseEnter={e => e.currentTarget.style.color = '#d4af64'}
+              onMouseLeave={e => e.currentTarget.style.color = '#7a6a5a'}
+            >
+              FAQ
+              <span
+                className="absolute -bottom-1 left-0 h-px w-0 transition-all duration-400 group-hover:w-full"
+                style={{
+                  background: 'linear-gradient(to right, #d4af64, #b8955a)',
+                  transitionDuration: '400ms',
+                }}
+              />
+            </button>
+
+            {/* ── Auth link ── */}
+            {session ? (
+              <button
+                onClick={handleLogout}
+                className="relative text-xs uppercase tracking-[3px] transition-all duration-300"
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: '#4a3a2a',
+                  fontFamily: 'Georgia, serif',
+                  padding: 0,
+                }}
+                onMouseEnter={e => e.currentTarget.style.color = '#d4af64'}
+                onMouseLeave={e => e.currentTarget.style.color = '#4a3a2a'}
+              >
+                Sign Out
+              </button>
+            ) : (
+              <button
+                onClick={() => handleNav('auth')}
+                className="relative text-xs uppercase tracking-[3px] transition-all duration-300 group"
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  color: currentPage === 'auth' ? '#d4af64' : '#7a6a5a',
+                  fontFamily: 'Georgia, serif',
+                  padding: 0,
+                }}
+                onMouseEnter={e => e.currentTarget.style.color = '#d4af64'}
+                onMouseLeave={e => e.currentTarget.style.color = currentPage === 'auth' ? '#d4af64' : '#7a6a5a'}
+              >
+                Login
+                <span
+                  className="absolute -bottom-1 left-0 h-px transition-all duration-400 group-hover:w-full"
+                  style={{
+                    background: 'linear-gradient(to right, #d4af64, #b8955a)',
+                    width: currentPage === 'auth' ? '100%' : '0%',
+                    transitionDuration: '400ms',
+                  }}
+                />
+              </button>
+            )}
           </div>
 
-          {/* ── DESKTOP RIGHT ACTIONS ── */}
+          {/* ── DESKTOP RIGHT: COMPOSE CTA ── */}
           <div className="hidden lg:flex items-center gap-6">
-            {/* Search */}
             <button
-              className="transition-colors duration-300"
-              style={{ color: '#5a4f45' }}
-              onMouseEnter={e => e.currentTarget.style.color = '#d4af64'}
-              onMouseLeave={e => e.currentTarget.style.color = '#5a4f45'}
-            >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-              </svg>
-            </button>
-
-            {/* Cart */}
-            <button
-              className="relative transition-colors duration-300"
-              style={{ color: '#5a4f45' }}
-              onMouseEnter={e => e.currentTarget.style.color = '#d4af64'}
-              onMouseLeave={e => e.currentTarget.style.color = '#5a4f45'}
-            >
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-              </svg>
-              <span
-                className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full text-[9px] font-medium flex items-center justify-center"
-                style={{ background: '#d4af64', color: '#0c0a08' }}
-              >
-                0
-              </span>
-            </button>
-
-            {/* Divider */}
-            <div className="h-4 w-px" style={{ background: 'rgba(212,175,100,0.2)' }} />
-
-            {/* CTA */}
-            <button
+              onClick={() => handleNav('quiz')}
               className="relative px-7 py-2.5 text-xs uppercase tracking-[3px] transition-all duration-400 overflow-hidden group"
               style={{
                 border: '1px solid rgba(212,175,100,0.4)',
-                color: '#d4af64',
+                color: ['quiz', 'checkout'].includes(currentPage) ? '#0c0a08' : '#d4af64',
                 fontFamily: 'Georgia, serif',
                 clipPath: 'polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%)',
+                background: ['quiz', 'checkout'].includes(currentPage) ? 'linear-gradient(135deg, #c4a044, #d4af64)' : 'transparent',
+                cursor: 'pointer',
               }}
             >
-              <span className="relative z-10 transition-colors duration-300 group-hover:text-[#0c0a08]">Create Your Scent</span>
-              <div
-                className="absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300"
-                style={{ background: 'linear-gradient(135deg, #c4a044, #d4af64)' }}
-              />
+              <span className="relative z-10 transition-colors duration-300 group-hover:text-[#0c0a08]">
+                Compose Your Scent
+              </span>
+              {!['quiz', 'checkout'].includes(currentPage) && (
+                <div
+                  className="absolute inset-0 translate-y-full group-hover:translate-y-0 transition-transform duration-300"
+                  style={{ background: 'linear-gradient(135deg, #c4a044, #d4af64)' }}
+                />
+              )}
             </button>
           </div>
 
@@ -155,7 +232,7 @@ const Navbar = () => {
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="lg:hidden transition-colors duration-300"
-            style={{ color: '#7a6a5a' }}
+            style={{ color: '#7a6a5a', background: 'none', border: 'none', cursor: 'pointer' }}
           >
             <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               {isMobileMenuOpen ? (
@@ -180,42 +257,82 @@ const Navbar = () => {
       >
         <div className="max-w-7xl mx-auto px-8 py-8 space-y-6">
           {navLinks.map((link) => (
-            <a
+            <button
               key={link.name}
-              href={link.href}
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block text-sm uppercase tracking-[4px] transition-colors duration-300 py-1"
-              style={{ color: '#7a6a5a', fontFamily: 'Georgia, serif' }}
-              onMouseEnter={e => e.currentTarget.style.color = '#d4af64'}
-              onMouseLeave={e => e.currentTarget.style.color = '#7a6a5a'}
+              onClick={() => handleNav(link.page)}
+              className="block w-full text-left text-sm uppercase tracking-[4px] transition-colors duration-300 py-1"
+              style={{
+                color: currentPage === link.page ? '#d4af64' : '#7a6a5a',
+                fontFamily: 'Georgia, serif',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+              }}
             >
               {link.name}
-            </a>
+            </button>
           ))}
-          <div className="pt-4 space-y-4 border-t" style={{ borderColor: 'rgba(212,175,100,0.1)' }}>
+
+          {/* Mobile FAQ scroll link */}
+          <button
+            onClick={handleFaqScroll}
+            className="block w-full text-left text-sm uppercase tracking-[4px] transition-colors duration-300 py-1"
+            style={{
+              color: '#7a6a5a',
+              fontFamily: 'Georgia, serif',
+              background: 'none',
+              border: 'none',
+              cursor: 'pointer',
+            }}
+          >
+            FAQ
+          </button>
+
+          {/* Mobile auth */}
+          {session ? (
             <button
+              onClick={handleLogout}
+              className="block w-full text-left text-sm uppercase tracking-[4px] transition-colors duration-300 py-1"
+              style={{
+                color: '#4a3a2a',
+                fontFamily: 'Georgia, serif',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+              }}
+            >
+              Sign Out
+            </button>
+          ) : (
+            <button
+              onClick={() => handleNav('auth')}
+              className="block w-full text-left text-sm uppercase tracking-[4px] transition-colors duration-300 py-1"
+              style={{
+                color: currentPage === 'auth' ? '#d4af64' : '#7a6a5a',
+                fontFamily: 'Georgia, serif',
+                background: 'none',
+                border: 'none',
+                cursor: 'pointer',
+              }}
+            >
+              Login
+            </button>
+          )}
+
+          <div className="pt-4 border-t" style={{ borderColor: 'rgba(212,175,100,0.1)' }}>
+            <button
+              onClick={() => handleNav('quiz')}
               className="w-full py-4 text-xs uppercase tracking-[3px] transition-all duration-300"
               style={{
                 border: '1px solid rgba(212,175,100,0.3)',
                 color: '#d4af64',
                 fontFamily: 'Georgia, serif',
+                background: 'none',
+                cursor: 'pointer',
               }}
             >
-              Create Your Scent
+              Compose Your Scent
             </button>
-            <div className="flex items-center justify-center gap-8 pt-2">
-              <button style={{ color: '#5a4f45' }}>
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
-              </button>
-              <button className="relative" style={{ color: '#5a4f45' }}>
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                </svg>
-                <span className="absolute -top-1.5 -right-1.5 w-4 h-4 rounded-full text-[9px] flex items-center justify-center" style={{ background: '#d4af64', color: '#0c0a08' }}>0</span>
-              </button>
-            </div>
           </div>
         </div>
       </div>

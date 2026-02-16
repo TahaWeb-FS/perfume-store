@@ -1,4 +1,4 @@
-const QuizIntro = ({ onStartQuiz }) => {
+const QuizIntro = ({ onStartQuiz, onStartPartnerQuiz }) => {
   return (
     <section
       className="relative py-32 px-6 overflow-hidden"
@@ -9,7 +9,6 @@ const QuizIntro = ({ onStartQuiz }) => {
         <div style={{ background: 'radial-gradient(ellipse 60% 50% at 50% 0%, rgba(212,175,100,0.06) 0%, transparent 70%)' }} className="absolute inset-0" />
         <div style={{ background: 'radial-gradient(ellipse 40% 30% at 20% 100%, rgba(180,120,80,0.04) 0%, transparent 70%)' }} className="absolute inset-0" />
         <div style={{ background: 'radial-gradient(ellipse 40% 30% at 80% 100%, rgba(212,175,100,0.04) 0%, transparent 70%)' }} className="absolute inset-0" />
-        {/* Subtle grid */}
         <div className="absolute inset-0 opacity-[0.015]" style={{
           backgroundImage: 'linear-gradient(rgba(212,175,100,1) 1px, transparent 1px), linear-gradient(90deg, rgba(212,175,100,1) 1px, transparent 1px)',
           backgroundSize: '80px 80px',
@@ -20,7 +19,6 @@ const QuizIntro = ({ onStartQuiz }) => {
 
         {/* ── HEADER ── */}
         <div className="text-center mb-20">
-          {/* Eyebrow */}
           <div className="inline-flex items-center gap-4 mb-8">
             <div className="h-px w-12" style={{ background: 'linear-gradient(to right, transparent, #d4af64)' }} />
             <span className="text-xs uppercase tracking-[5px]" style={{ color: '#c4a55a', fontFamily: 'Georgia, serif' }}>
@@ -29,34 +27,15 @@ const QuizIntro = ({ onStartQuiz }) => {
             <div className="h-px w-12" style={{ background: 'linear-gradient(to left, transparent, #d4af64)' }} />
           </div>
 
-          {/* Heading */}
-          <h2
-            className="text-5xl lg:text-7xl font-light tracking-tight mb-6"
-            style={{ fontFamily: 'Georgia, serif' }}
-          >
-            <span
-              className="block"
-              style={{
-                background: 'linear-gradient(135deg, #f5f0e8 0%, #d4af64 50%, #e8d5a3 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}
-            >
+          <h2 className="text-5xl lg:text-7xl font-light tracking-tight mb-6" style={{ fontFamily: 'Georgia, serif' }}>
+            <span className="block" style={{ background: 'linear-gradient(135deg, #f5f0e8 0%, #d4af64 50%, #e8d5a3 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
               Discover Your
             </span>
-            <span
-              className="block mt-2"
-              style={{
-                background: 'linear-gradient(135deg, #d4af64 0%, #f5f0e8 60%, #b8955a 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-              }}
-            >
+            <span className="block mt-2" style={{ background: 'linear-gradient(135deg, #d4af64 0%, #f5f0e8 60%, #b8955a 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
               Signature Scent
             </span>
           </h2>
 
-          {/* Ornamental divider */}
           <div className="flex items-center justify-center gap-3 mb-8">
             <div className="h-px w-16" style={{ background: 'linear-gradient(to right, transparent, rgba(212,175,100,0.4))' }} />
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -67,10 +46,7 @@ const QuizIntro = ({ onStartQuiz }) => {
             <div className="h-px w-16" style={{ background: 'linear-gradient(to left, transparent, rgba(212,175,100,0.4))' }} />
           </div>
 
-          <p
-            className="text-lg max-w-2xl mx-auto leading-relaxed"
-            style={{ color: '#6a5a4a', fontFamily: 'Georgia, serif', lineHeight: '1.9' }}
-          >
+          <p className="text-lg max-w-2xl mx-auto leading-relaxed" style={{ color: '#6a5a4a', fontFamily: 'Georgia, serif', lineHeight: '1.9' }}>
             Answer 9 thoughtful questions about your personality, preferences, and essence.
             Our intelligent system will reveal your unique fragrance archetype and craft a bespoke scent profile.
           </p>
@@ -113,88 +89,86 @@ const QuizIntro = ({ onStartQuiz }) => {
             <div
               key={index}
               className="group relative p-8 transition-all duration-500"
-              style={{
-                background: 'rgba(212,175,100,0.02)',
-                border: '1px solid rgba(212,175,100,0.1)',
-              }}
-              onMouseEnter={e => {
-                e.currentTarget.style.background = 'rgba(212,175,100,0.05)';
-                e.currentTarget.style.borderColor = 'rgba(212,175,100,0.25)';
-              }}
-              onMouseLeave={e => {
-                e.currentTarget.style.background = 'rgba(212,175,100,0.02)';
-                e.currentTarget.style.borderColor = 'rgba(212,175,100,0.1)';
-              }}
+              style={{ background: 'rgba(212,175,100,0.02)', border: '1px solid rgba(212,175,100,0.1)' }}
+              onMouseEnter={e => { e.currentTarget.style.background = 'rgba(212,175,100,0.05)'; e.currentTarget.style.borderColor = 'rgba(212,175,100,0.25)'; }}
+              onMouseLeave={e => { e.currentTarget.style.background = 'rgba(212,175,100,0.02)'; e.currentTarget.style.borderColor = 'rgba(212,175,100,0.1)'; }}
             >
-              {/* Number */}
               <div className="flex items-start justify-between mb-6">
-                <span
-                  className="text-4xl font-light opacity-20"
-                  style={{ color: '#d4af64', fontFamily: 'Georgia, serif', lineHeight: 1 }}
-                >
-                  {feature.number}
-                </span>
-                <div
-                  className="flex items-center justify-center w-10 h-10 transition-all duration-300 group-hover:scale-110"
-                  style={{ color: '#d4af64' }}
-                >
+                <span className="text-4xl font-light opacity-20" style={{ color: '#d4af64', fontFamily: 'Georgia, serif', lineHeight: 1 }}>{feature.number}</span>
+                <div className="flex items-center justify-center w-10 h-10 transition-all duration-300 group-hover:scale-110" style={{ color: '#d4af64' }}>
                   {feature.icon}
                 </div>
               </div>
-              <h3
-                className="text-lg font-light mb-3"
-                style={{ color: '#e8d5a3', fontFamily: 'Georgia, serif' }}
-              >
-                {feature.title}
-              </h3>
-              <p
-                className="text-sm leading-relaxed"
-                style={{ color: '#5a4f45', fontFamily: 'Georgia, serif', lineHeight: '1.8' }}
-              >
-                {feature.description}
-              </p>
-              {/* Corner accent */}
+              <h3 className="text-lg font-light mb-3" style={{ color: '#e8d5a3', fontFamily: 'Georgia, serif' }}>{feature.title}</h3>
+              <p className="text-sm leading-relaxed" style={{ color: '#5a4f45', fontFamily: 'Georgia, serif', lineHeight: '1.8' }}>{feature.description}</p>
               <div className="absolute bottom-0 right-0 w-6 h-6 opacity-0 group-hover:opacity-40 transition-opacity duration-300">
-                <svg viewBox="0 0 24 24" fill="none">
-                  <path d="M24 0 L24 24 L0 24" stroke="#d4af64" strokeWidth="1"/>
-                </svg>
+                <svg viewBox="0 0 24 24" fill="none"><path d="M24 0 L24 24 L0 24" stroke="#d4af64" strokeWidth="1"/></svg>
               </div>
             </div>
           ))}
         </div>
 
-        {/* ── CTA ── */}
-        <div className="text-center">
-          <button
-            onClick={onStartQuiz}
-            className="group relative inline-flex items-center gap-5 px-14 py-5 text-sm uppercase tracking-[4px] overflow-hidden transition-all duration-500"
-            style={{
-              background: 'linear-gradient(135deg, #c4a044, #d4af64, #b8955a)',
-              color: '#0c0a08',
-              fontFamily: 'Georgia, serif',
-              clipPath: 'polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%)',
-              boxShadow: '0 8px 40px rgba(212,175,100,0.2)',
-            }}
-            onMouseEnter={e => e.currentTarget.style.boxShadow = '0 12px 50px rgba(212,175,100,0.35)'}
-            onMouseLeave={e => e.currentTarget.style.boxShadow = '0 8px 40px rgba(212,175,100,0.2)'}
-          >
-            <span className="relative z-10 font-medium">Begin Your Journey</span>
-            <svg
-              className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300"
-              fill="none" viewBox="0 0 24 24" stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-            </svg>
-            <div
-              className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              style={{ background: 'linear-gradient(135deg, #d4af64, #e8c97a, #c4a044)' }}
-            />
-          </button>
+        {/* ── DUAL CTA ── */}
+        <div className="flex flex-col items-center gap-6">
 
-          <p
-            className="mt-5 text-xs uppercase tracking-[3px]"
-            style={{ color: '#3a3028', fontFamily: 'Georgia, serif' }}
-          >
+          {/* Divider label */}
+          <div className="flex items-center gap-4 w-full max-w-xl">
+            <div className="h-px flex-1" style={{ background: 'linear-gradient(to right, transparent, rgba(212,175,100,0.15))' }} />
+            <span className="text-xs uppercase tracking-[3px]" style={{ color: '#3a3028', fontFamily: 'Georgia, serif' }}>Choose your path</span>
+            <div className="h-px flex-1" style={{ background: 'linear-gradient(to left, transparent, rgba(212,175,100,0.15))' }} />
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center gap-4">
+
+            {/* ── PRIMARY: Create Your Own ── */}
+            <button
+              onClick={onStartQuiz}
+              className="group relative inline-flex items-center gap-5 px-14 py-5 text-sm uppercase tracking-[4px] overflow-hidden transition-all duration-500"
+              style={{
+                background: 'linear-gradient(135deg, #c4a044, #d4af64, #b8955a)',
+                color: '#0c0a08',
+                fontFamily: 'Georgia, serif',
+                clipPath: 'polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%)',
+                boxShadow: '0 8px 40px rgba(212,175,100,0.2)',
+              }}
+              onMouseEnter={e => e.currentTarget.style.boxShadow = '0 12px 50px rgba(212,175,100,0.35)'}
+              onMouseLeave={e => e.currentTarget.style.boxShadow = '0 8px 40px rgba(212,175,100,0.2)'}
+            >
+              <span className="relative z-10 font-medium">Create Your Own Perfume</span>
+              <svg className="w-5 h-5 relative z-10 group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+              <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" style={{ background: 'linear-gradient(135deg, #d4af64, #e8c97a, #c4a044)' }} />
+            </button>
+
+            {/* ── SECONDARY: For Your Partner ── */}
+            <button
+              onClick={onStartPartnerQuiz}
+              className="group relative inline-flex items-center gap-4 px-10 py-5 text-sm uppercase tracking-[4px] transition-all duration-500"
+              style={{
+                border: '1px solid rgba(212,175,100,0.3)',
+                color: '#c4a55a',
+                fontFamily: 'Georgia, serif',
+                clipPath: 'polygon(12px 0%, 100% 0%, calc(100% - 12px) 100%, 0% 100%)',
+                background: 'transparent',
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.borderColor = 'rgba(212,175,100,0.55)';
+                e.currentTarget.style.background = 'rgba(212,175,100,0.05)';
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.borderColor = 'rgba(212,175,100,0.3)';
+                e.currentTarget.style.background = 'transparent';
+              }}
+            >
+              <svg className="w-4 h-4 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
+              </svg>
+              <span>Create For Your Partner</span>
+            </button>
+          </div>
+
+          <p className="text-xs uppercase tracking-[3px]" style={{ color: '#3a3028', fontFamily: 'Georgia, serif' }}>
             Takes less than 2 minutes &nbsp;·&nbsp; No account required
           </p>
         </div>
