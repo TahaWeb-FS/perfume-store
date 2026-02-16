@@ -2,16 +2,16 @@ import { useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import QuizIntro from './components/Quizintro';
-import PerfumeQuiz from './components/PerfumeQuiz';
-import PartnerQuiz from './components/PartnerQuiz';
-import BoxCustomizer from './components/BoxCustomizer';
-import PerfumeCheckout from './components/PerfumeCheckout';
-import AboutPage from './components/AboutPage';
-import LegalPage from './components/LegalPage';
-import AuthPage from './components/AuthPage';
-import FAQSection from './components/FAQSection';
-import ContactPage from './components/ContactPage';
-import GiftBoxCustomizer from './components/GiftBoxCustomizer';
+import PerfumeQuiz from './components/Perfumequiz';
+import PartnerQuiz from './components/Partnerquiz';
+import BoxCustomizer from './components/Boxcustomizer';
+import PerfumeCheckout from './components/Perfumecheckout';
+import AboutPage from './components/Aboutpage';
+import LegalPage from './components/Legalpage';
+import AuthPage from './components/Authpage';
+import FAQSection from './components/Faqsection';
+import ContactPage from './components/Contactpage';
+import GiftBoxCustomizer from './components/Giftboxcustomizer';
 
 export default function App() {
   const [page, setPage] = useState('home'); // 'home' | 'quiz' | 'partnerQuiz' | 'boxCustomizer' | 'giftBoxCustomizer' | 'checkout' | 'about' | 'legal' | 'auth' | 'contact'
