@@ -12,7 +12,7 @@ const pillars = [
   {
     number: '02',
     title: 'The Craft',
-    text: 'Our perfumers trained in the classical French tradition, apprenticed for over a decade before composing under the Maison Noir name. Each fragrance undergoes a minimum of 18 months of development before release.',
+    text: 'Our perfumers trained in the classical French tradition, apprenticed for over a decade before composing under the NOEME  name. Each fragrance undergoes a minimum of 18 months of development before release.',
     detail: '18+ Months Per Creation',
   },
   {
@@ -24,7 +24,7 @@ const pillars = [
 ];
 
 const timeline = [
-  { year: '1998', event: 'Founded in Paris by master perfumer Éléonore Vidal in a single atelier room on Rue du Faubourg.' },
+  { year: '1998', event: "Founded in Morocco by Noeme's team in a single atelier room on Rue du Faubourg." },
   { year: '2004', event: 'First bespoke commission for a private client — the beginning of our custom fragrance programme.' },
   { year: '2011', event: 'Awarded the Grand Prix de la Création by the French Perfumers\' Guild.' },
   { year: '2017', event: 'Launched the Composer — bringing bespoke fragrance creation online for the first time.' },
@@ -145,23 +145,11 @@ const AboutPage = () => {
               opacity: mounted ? 1 : 0, transform: mounted ? 'translateY(0)' : 'translateY(16px)',
               transition: 'all 1s ease 0.3s',
             }}>
-              Founded in Paris in 1998, Maison Noir was born from a single belief: that fragrance is not merely worn — it is lived. Every bottle we create carries the weight of a memory not yet made.
+              Founded in Morocco in 2025, Noeme was born from a single belief: that fragrance is not merely worn — it is lived. Every bottle we create carries the weight of a memory not yet made.
             </p>
 
             {/* Founder signature line */}
-            <div style={{
-              marginTop: '3.5rem', display: 'flex', alignItems: 'center', gap: '1.5rem',
-              opacity: mounted ? 1 : 0, transform: mounted ? 'translateY(0)' : 'translateY(16px)',
-              transition: 'all 1s ease 0.45s',
-            }}>
-              <div style={{ width: '48px', height: '48px', borderRadius: '50%', border: '1px solid rgba(212,175,100,0.25)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <span style={{ fontSize: '1rem', color: '#d4af64', opacity: 0.7 }}>ÉV</span>
-              </div>
-              <div>
-                <p style={{ fontSize: '0.75rem', color: '#c4a55a', letterSpacing: '2px', marginBottom: '0.15rem' }}>Éléonore Vidal</p>
-                <p style={{ fontSize: '0.62rem', color: '#5a4f45', letterSpacing: '3px', textTransform: 'uppercase' }}>Founder & Master Perfumer</p>
-              </div>
-            </div>
+            
           </div>
         </div>
 
@@ -256,62 +244,7 @@ const AboutPage = () => {
       </section>
 
       {/* ── TIMELINE ──────────────────────────────────────────────────────── */}
-      <section
-        style={{
-          padding: '6rem 2.5rem 8rem',
-          borderTop: '1px solid rgba(212,175,100,0.08)',
-          background: 'linear-gradient(180deg, #0c0a08 0%, #110e09 50%, #0c0a08 100%)',
-        }}
-      >
-        <div style={{ maxWidth: '860px', margin: '0 auto' }}>
-
-          {/* Label */}
-          <div
-            ref={ref('timeline-label')}
-            style={{
-              marginBottom: '5rem', textAlign: 'center',
-              opacity: isVisible('timeline-label') ? 1 : 0, transform: isVisible('timeline-label') ? 'translateY(0)' : 'translateY(24px)',
-              transition: 'all 0.8s ease',
-            }}
-          >
-            <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1rem' }}>
-              <div style={{ height: '1px', width: '2rem', background: 'linear-gradient(to right, transparent, #d4af64)' }} />
-              <span style={{ fontSize: '0.65rem', letterSpacing: '5px', textTransform: 'uppercase', color: '#c4a55a' }}>Our History</span>
-              <div style={{ height: '1px', width: '2rem', background: 'linear-gradient(to left, transparent, #d4af64)' }} />
-            </div>
-            <h2 style={{ fontSize: 'clamp(2rem, 5vw, 3.5rem)', fontWeight: 300, color: '#f5f0e8', letterSpacing: '1px' }}>A Quarter Century</h2>
-          </div>
-
-          {/* Timeline items */}
-          <div style={{ position: 'relative' }}>
-            {/* Vertical line */}
-            <div style={{ position: 'absolute', left: '5.5rem', top: 0, bottom: 0, width: '1px', background: 'linear-gradient(to bottom, transparent, rgba(212,175,100,0.2), rgba(212,175,100,0.15), transparent)' }} />
-
-            {timeline.map(({ year, event }, i) => (
-              <div
-                key={year}
-                ref={ref(`tl-${i}`)}
-                style={{
-                  display: 'flex', gap: '2.5rem', marginBottom: '3rem', alignItems: 'flex-start',
-                  opacity: isVisible(`tl-${i}`) ? 1 : 0, transform: isVisible(`tl-${i}`) ? 'translateX(0)' : 'translateX(-20px)',
-                  transition: `all 0.7s ease ${i * 0.1}s`,
-                }}
-              >
-                {/* Year */}
-                <div style={{ width: '4rem', flexShrink: 0, textAlign: 'right', paddingTop: '0.2rem' }}>
-                  <span style={{ fontSize: '0.8rem', letterSpacing: '2px', color: '#d4af64', opacity: 0.7, fontFamily: 'Georgia, serif' }}>{year}</span>
-                </div>
-                {/* Dot */}
-                <div style={{ position: 'relative', flexShrink: 0, width: '3rem', display: 'flex', justifyContent: 'center', paddingTop: '0.35rem' }}>
-                  <div style={{ width: '7px', height: '7px', borderRadius: '50%', background: '#d4af64', opacity: 0.5, flexShrink: 0 }} />
-                </div>
-                {/* Text */}
-                <p style={{ fontSize: '0.9rem', lineHeight: 1.85, color: '#7a6a5a', paddingTop: '0.1rem', flex: 1 }}>{event}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      
 
       {/* ── ATELIER CTA ───────────────────────────────────────────────────── */}
       <section
@@ -393,9 +326,9 @@ const AboutPage = () => {
       {/* ── FOOTER ───────────────────────────────────────────────────────── */}
       <footer style={{ borderTop: '1px solid rgba(212,175,100,0.08)', padding: '3rem 2.5rem' }}>
         <div style={{ maxWidth: '1280px', margin: '0 auto', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '1.5rem' }}>
-          <span style={{ fontSize: '0.9rem', letterSpacing: '5px', color: 'rgba(212,175,100,0.35)', textTransform: 'uppercase', fontWeight: 300 }}>Maison Noir</span>
+          <span style={{ fontSize: '0.9rem', letterSpacing: '5px', color: 'rgba(212,175,100,0.35)', textTransform: 'uppercase', fontWeight: 300 }}>NOEME</span>
           <p style={{ fontSize: '0.65rem', letterSpacing: '2px', color: '#4a3f35', textTransform: 'uppercase' }}>
-            © {new Date().getFullYear()} Maison Noir — All rights reserved
+            © {new Date().getFullYear()} NOEME  — All rights reserved
           </p>
         </div>
       </footer>

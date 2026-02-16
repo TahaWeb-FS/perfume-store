@@ -95,10 +95,12 @@ const GiftBoxCustomizer = ({ perfumeResults, onContinue, onBack }) => {
   const [engraveDate, setEngraveDate]   = useState('');
   const [engraveMsg, setEngraveMsg]     = useState('');
   const [wantsEngraving, setWantsEngraving] = useState(true);
+  const [bottleFinish, setBottleFinish] = useState('gold');
 
   const handleContinue = () => {
     onContinue({
       ...perfumeResults,
+      bottleFinish,
       boxCustomization: {
         style: selectedBox,
         engraving: wantsEngraving ? {
@@ -199,6 +201,124 @@ const GiftBoxCustomizer = ({ perfumeResults, onContinue, onBack }) => {
           <p style={{ fontSize: '0.9rem', color: textMuted, fontFamily: serif, lineHeight: 1.9, maxWidth: '460px', margin: '0 auto' }}>
             Select the presentation that best reflects who they are. Every box is handcrafted and sealed with care.
           </p>
+        </div>
+
+
+        {/* ── BOTTLE FINISH SELECTOR ── */}
+        <div style={{ marginBottom: '4rem' }}>
+          <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+            <p style={{ fontSize: '0.6rem', letterSpacing: '6px', textTransform: 'uppercase', color: '#c4a55a', fontFamily: serif, marginBottom: '0.4rem' }}>
+              Finish
+            </p>
+            <p style={{ fontSize: '0.75rem', color: textMuted, fontFamily: serif }}>
+              Choose the metal finish for the bottle cap & atomiser
+            </p>
+          </div>
+
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '2.5rem' }}>
+            {[
+              {
+                id: 'gold',
+                label: 'Or',
+                sub: 'Warm Gold',
+                glow: 'rgba(212,175,100,0.5)',
+                ring: '#d4af64',
+              },
+              {
+                id: 'silver',
+                label: 'Argent',
+                sub: 'Cool Silver',
+                glow: 'rgba(200,200,220,0.4)',
+                ring: '#c0c0c0',
+              },
+            ].map(({ id, label, sub, glow, ring }) => {
+              const active = bottleFinish === id;
+              return (
+                <button
+                  key={id}
+                  onClick={() => setBottleFinish(id)}
+                  style={{
+                    cursor: 'pointer',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '1.25rem',
+                    padding: '1.75rem 2.25rem',
+                    position: 'relative',
+                    transition: 'all 0.4s ease',
+                    background: active ? 'rgba(212,175,100,0.04)' : 'transparent',
+                    border: `1px solid ${active ? ring + '50' : 'rgba(212,175,100,0.08)'}`,
+                    clipPath: 'polygon(14px 0%, 100% 0%, calc(100% - 14px) 100%, 0% 100%)',
+                  }}
+                >
+                  <div style={{ position: 'relative', width: '60px', height: '100px' }}>
+                    <svg width="60" height="100" viewBox="0 0 60 100" fill="none" style={{ position: 'absolute', inset: 0 }}>
+                      <defs>
+                        <linearGradient id={`gbody-${id}`} x1="0" y1="0" x2="1" y2="0">
+                          <stop offset="0%" stopColor="rgba(212,175,100,0.08)"/>
+                          <stop offset="50%" stopColor="rgba(212,175,100,0.18)"/>
+                          <stop offset="100%" stopColor="rgba(212,175,100,0.06)"/>
+                        </linearGradient>
+                        <linearGradient id={`gmetal-${id}`} x1="0" y1="0" x2="1" y2="1">
+                          {id === 'gold' ? (
+                            <>
+                              <stop offset="0%" stopColor="#f5d78e"/>
+                              <stop offset="30%" stopColor="#d4af64"/>
+                              <stop offset="60%" stopColor="#b8860b"/>
+                              <stop offset="100%" stopColor="#f0c040"/>
+                            </>
+                          ) : (
+                            <>
+                              <stop offset="0%" stopColor="#ffffff"/>
+                              <stop offset="30%" stopColor="#d8d8d8"/>
+                              <stop offset="60%" stopColor="#909090"/>
+                              <stop offset="100%" stopColor="#e0e0e0"/>
+                            </>
+                          )}
+                        </linearGradient>
+                      </defs>
+                      <path d="M18 38 L10 58 L10 94 Q10 97 13 97 L47 97 Q50 97 50 94 L50 58 L42 38 Z" fill={`url(#gbody-${id})`} stroke="rgba(212,175,100,0.2)" strokeWidth="0.5"/>
+                      <rect x="22" y="20" width="16" height="19" rx="1" fill={`url(#gbody-${id})`} stroke="rgba(212,175,100,0.2)" strokeWidth="0.5"/>
+                      <rect x="20" y="8" width="20" height="13" rx="2" fill={`url(#gmetal-${id})`}/>
+                      <rect x="22" y="10" width="6" height="1.5" rx="0.75" fill="rgba(255,255,255,0.5)"/>
+                      <rect x="27" y="4" width="6" height="5" rx="1.5" fill={`url(#gmetal-${id})`}/>
+                      <rect x="14" y="62" width="32" height="22" rx="0.5" fill="rgba(212,175,100,0.06)" stroke="rgba(212,175,100,0.15)" strokeWidth="0.5"/>
+                      <text x="30" y="72" textAnchor="middle" fill="rgba(212,175,100,0.5)" fontSize="4" fontFamily="Georgia, serif" letterSpacing="1.5">NOEME</text>
+                      <text x="30" y="79" textAnchor="middle" fill="rgba(212,175,100,0.25)" fontSize="3" fontFamily="Georgia, serif" letterSpacing="2">MAISON NOIR</text>
+                    </svg>
+                    {active && (
+                      <div style={{
+                        position: 'absolute',
+                        bottom: '-8px',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        width: '50px',
+                        height: '10px',
+                        background: glow,
+                        filter: 'blur(8px)',
+                        borderRadius: '50%',
+                      }} />
+                    )}
+                  </div>
+                  <div style={{ textAlign: 'center' }}>
+                    <p style={{ fontFamily: serif, fontSize: '0.75rem', letterSpacing: '4px', textTransform: 'uppercase', color: active ? ring : '#5a4f45', margin: '0 0 0.2rem', transition: 'color 0.3s ease' }}>
+                      {label}
+                    </p>
+                    <p style={{ fontFamily: serif, fontSize: '0.58rem', letterSpacing: '2px', color: active ? ring + 'aa' : textDim, margin: 0, transition: 'color 0.3s ease' }}>
+                      {sub}
+                    </p>
+                  </div>
+                  <div style={{
+                    width: '5px', height: '5px', borderRadius: '50%',
+                    background: active ? ring : 'transparent',
+                    border: `1px solid ${active ? ring : 'rgba(212,175,100,0.2)'}`,
+                    transition: 'all 0.3s ease',
+                    boxShadow: active ? `0 0 8px ${glow}` : 'none',
+                  }} />
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* ── BOX SELECTOR ── */}

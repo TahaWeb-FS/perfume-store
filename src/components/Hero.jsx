@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import themuse from '../images/themuse1.png'
 
-const Hero = () => {
+const Hero = ({ onStartQuiz }) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [mounted, setMounted] = useState(false);
 
@@ -153,6 +153,7 @@ const Hero = () => {
           {/* ── CTA BUTTONS ── */}
           <div className="flex flex-col sm:flex-row items-start gap-4 mb-16">
             <button
+              onClick={onStartQuiz}
               className="group relative px-10 py-4 text-sm uppercase tracking-[3px] overflow-hidden transition-all duration-500"
               style={{
                 background: 'linear-gradient(135deg, #c4a044, #d4af64, #b8955a)',
@@ -160,6 +161,8 @@ const Hero = () => {
                 fontFamily: 'Georgia, serif',
                 letterSpacing: '3px',
                 clipPath: 'polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)',
+                border: 'none',
+                cursor: 'pointer',
               }}
             >
               <span className="relative z-10 flex items-center gap-3 font-medium">
@@ -178,6 +181,8 @@ const Hero = () => {
                 color: '#c4a55a',
                 fontFamily: 'Georgia, serif',
                 clipPath: 'polygon(8px 0%, 100% 0%, calc(100% - 8px) 100%, 0% 100%)',
+                background: 'transparent',
+                cursor: 'pointer',
               }}
               onMouseEnter={e => { e.currentTarget.style.borderColor = 'rgba(212,175,100,0.5)'; e.currentTarget.style.background = 'rgba(212,175,100,0.05)'; }}
               onMouseLeave={e => { e.currentTarget.style.borderColor = 'rgba(212,175,100,0.25)'; e.currentTarget.style.background = 'transparent'; }}
@@ -218,6 +223,9 @@ const Hero = () => {
               width: index === currentSlide ? '32px' : '6px',
               height: '2px',
               background: index === currentSlide ? '#d4af64' : 'rgba(212,175,100,0.25)',
+              border: 'none',
+              cursor: 'pointer',
+              padding: 0,
             }}
           />
         ))}

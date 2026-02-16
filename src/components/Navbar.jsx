@@ -20,6 +20,7 @@ const Navbar = ({ onNavigate, currentPage }) => {
   const navLinks = [
     { name: 'About', page: 'about' },
     { name: 'Legal', page: 'legal' },
+    { name: 'Contact', page: 'contact' },
   ];
 
   const handleNav = (page) => {
@@ -97,7 +98,7 @@ const Navbar = ({ onNavigate, currentPage }) => {
                 WebkitTextFillColor: 'transparent',
               }}
             >
-              NOÉME
+              NOEME
             </span>
           </button>
 

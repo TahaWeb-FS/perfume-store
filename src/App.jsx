@@ -10,10 +10,11 @@ import AboutPage from './components/AboutPage';
 import LegalPage from './components/LegalPage';
 import AuthPage from './components/AuthPage';
 import FAQSection from './components/FAQSection';
+import ContactPage from './components/ContactPage';
 import GiftBoxCustomizer from './components/GiftBoxCustomizer';
 
 export default function App() {
-  const [page, setPage] = useState('home'); // 'home' | 'quiz' | 'partnerQuiz' | 'boxCustomizer' | 'giftBoxCustomizer' | 'checkout' | 'about' | 'legal' | 'auth'
+  const [page, setPage] = useState('home'); // 'home' | 'quiz' | 'partnerQuiz' | 'boxCustomizer' | 'giftBoxCustomizer' | 'checkout' | 'about' | 'legal' | 'auth' | 'contact'
   const [perfumeResults, setPerfumeResults] = useState(null);
 
   const handleNavigate = (destination) => {
@@ -104,6 +105,7 @@ export default function App() {
       {/* ── STATIC PAGES ── */}
       {page === 'about' && <AboutPage onNavigate={handleNavigate} />}
       {page === 'legal' && <LegalPage />}
+      {page === 'contact' && <ContactPage />}
 
       {/* ── AUTH PAGE ── */}
       {page === 'auth' && (
