@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import QuizIntro from './components/QuizIntro';
+import QuizIntro from './components/Quizintro';
 import PerfumeQuiz from './components/PerfumeQuiz';
 import PartnerQuiz from './components/PartnerQuiz';
 import BoxCustomizer from './components/BoxCustomizer';
