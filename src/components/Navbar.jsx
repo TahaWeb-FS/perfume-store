@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getSession, logout } from './AuthPage';
+import { getSession, logout } from './Authpage';
 
 const Navbar = ({ onNavigate, currentPage }) => {
   const [isScrolled, setIsScrolled] = useState(false);
